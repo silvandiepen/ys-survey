@@ -1,0 +1,32 @@
+@use "sass:map";
+
+@function color($name, $settings: ()) {
+  @if $settings == () {
+    @return var(--color-#{$name});
+  } @else {
+    $config: map.merge(
+      (
+        hue: var(--color-#{$name}-h),
+        saturation: var(--color-#{$name}-s),
+        lightness: var(--color-#{$name}-l),
+        opacity: 1,
+      ),
+      $settings
+    );
+
+    @return hsla(
+      var(--color-h, #{map.get($config, "hue")}),
+      var(--color-s, #{map.get($config, "saturation")}),
+      var(--color-l, #{map.get($config, "lightness")}),
+      map.get($config, "opacity")
+    );
+  }
+}
+
+@function v($name, $default: "") {
+  @if $default {
+    @return var(--#{$name}, $default);
+  } @else {
+    @return var(--#{$name});
+  }
+}

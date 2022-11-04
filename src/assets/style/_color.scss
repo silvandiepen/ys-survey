@@ -1,0 +1,82 @@
+@use "sass:map";
+@use "sass:math";
+
+$colors: (
+  dark: rgb(26, 27, 29),
+  dark-off: black,
+  light: #fff,
+  light-off: #f7f7f7,
+  primary: rgb(0, 230, 230),
+  secondary: rgb(9, 161, 173),
+  tertiary: rgb(243, 148, 135),
+);
+@function brightness($color) {
+  $red: red($color);
+  $green: green($color);
+  $blue: blue($color);
+  @return abs(math.div(($red + $red + $blue + $green + $green + $green), 6));
+}
+
+@function text-contrast($color) {
+  @if brightness($color) > 180 {
+    @return hsl(hue($color), saturation($color), 80%);
+  } @else {
+    @return hsl(hue($color), saturation($color), 20%);
+  }
+}
+
+@mixin create-rgb($name, $value) {
+  --color-#{$name}-h: #{hue($value)};
+  --color-#{$name}-s: #{saturation($value)};
+  --color-#{$name}-l: #{lightness($value)};
+  //   --color-#{$name}-r: #{red($value)};
+  //   --color-#{$name}-g: #{green($value)};
+  //   --color-#{$name}-b: #{blue($value)};
+  --color-#{$name}: hsl(
+    var(--color-#{$name}-hue, #{hue($value)}),
+    var(--color-#{$name}-saturation, #{saturation($value)}),
+    var(--color-#{$name}-lightness, #{lightness($value)})
+  );
+  //   --color-#{$name}: rgb(
+  //     var(--color-#{$name}-r),
+  //     var(--color-#{$name}-g),
+  //     var(--color-#{$name}-b)
+  //   );
+  @debug $name #{abs(round(lightness($value)))} #{brightness($value)};
+  --color-#{$name}-text: #{text-contrast($value)};
+}
+
+:root {
+  @each $name, $value in $colors {
+    @include create-rgb($name, $value);
+  }
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    @include create-rgb("background", map.get($colors, "dark"));
+    @include create-rgb("foreground", map.get($colors, "light"));
+    @include create-rgb("foreground-off", map.get($colors, "light-off"));
+    @include create-rgb("background-off", map.get($colors, "dark-off"));
+  }
+}
+@media (prefers-color-scheme: light) {
+  :root {
+    @include create-rgb("foreground", map.get($colors, "dark"));
+    @include create-rgb("background", map.get($colors, "light"));
+    @include create-rgb("foreground-off", map.get($colors, "dark-off"));
+    @include create-rgb("background-off", map.get($colors, "light-off"));
+  }
+}
+[color-mode="dark"]{
+@include create-rgb("background", map.get($colors, "dark"));
+@include create-rgb("foreground", map.get($colors, "light"));
+@include create-rgb("foreground-off", map.get($colors, "light-off"));
+@include create-rgb("background-off", map.get($colors, "dark-off"));
+}
+[color-mode="light"]{
+    @include create-rgb("foreground", map.get($colors, "dark"));
+    @include create-rgb("background", map.get($colors, "light"));
+    @include create-rgb("foreground-off", map.get($colors, "dark-off"));
+    @include create-rgb("background-off", map.get($colors, "light-off"));
+
+}

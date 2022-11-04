@@ -1,0 +1,18 @@
+@import "_global";
+@import "_color";
+@import "_default";
+@import "_reset";
+@import "_typography";
+
+body,
+html {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  color: color(foreground);
+  background-color: color(background);
+font-family: v(font-family);
+}
+

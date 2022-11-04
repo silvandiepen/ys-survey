@@ -1,0 +1,37 @@
+.button {
+  border: none;
+  border-radius: v(border-radius);
+  font-size: 1em;
+
+  // Colors
+  $button-colors: ("primary", "secondary", "tertiary") !default;
+
+  @each $color-name in $button-colors {
+    &--#{$color-name} {
+      background-color: color(#{$color-name});
+      color: color(#{$color-name}-text);
+      &:hover,
+      &:focus {
+        background-color: color(
+          $color-name,
+          (
+            lightness: 80%,
+          )
+        );
+      }
+    }
+  }
+
+  // Sizes
+  &--small {
+    font-size: 0.875em;
+    padding: v(space-xs) v(space-s);
+  }
+  &--medium {
+    padding: v(space-s) v(space);
+  }
+  &--large {
+    font-size: 1.25em;
+    padding: v(space) v(space-l);
+  }
+}
