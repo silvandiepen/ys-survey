@@ -16,7 +16,6 @@ export const useSurvey = () => {
    *
    */
   const initSurvey = () => {
-
     if (init) return;
     const localData = localStorage.getItem(localStorageKey);
 
@@ -42,7 +41,7 @@ export const useSurvey = () => {
       questions: questions,
     };
 
-    console.log("survey ::: saving data", saveData);
+    console.log("survey ::: saving data");
 
     localStorage.setItem(localStorageKey, JSON.stringify(saveData));
   };
@@ -57,8 +56,10 @@ export const useSurvey = () => {
    *
    */
   const nextStep = () => {
-    if (done || !nextStepAvailable) return;
-
+    if (done || !nextStepAvailable) {
+      console.log("survey ::: next step not available");
+      return;
+    }
     setStep(step + 1);
   };
 

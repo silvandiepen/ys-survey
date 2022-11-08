@@ -22,7 +22,7 @@ export const surveyData: SurveyQuestions = {
     question: "Name",
     description:"How can we call you?",
     answer: "",
-    required: true,
+    required: false,
     placeholder: "John Doe",
     type: "text",
     options: [],

@@ -4,9 +4,10 @@ import { Button } from "./components/UI/Button";
 import { Question } from "./components/Question";
 import { Summary } from "./components/Summary";
 
-import { useSharedSurvey } from "./SurveyController";
+import { useSharedSurvey } from "./hooks/SurveyController";
+import { SurveyQuestion } from "./hooks/survey";
+
 import "./assets/style/App.scss";
-import { SurveyQuestion } from "./survey";
 
 const bemm = createBemm("app");
 
@@ -40,7 +41,7 @@ function App() {
   };
 
   return (
-    <div className={bemm()}>
+    <div className={bemm()} data-testid="survey">
       {Questions()}
 
       {showSummary() && <Summary />}
