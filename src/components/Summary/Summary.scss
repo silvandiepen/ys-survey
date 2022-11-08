@@ -3,10 +3,12 @@
 
   &__list {
     background-color: color(background-off);
-    padding: v(space-s); border-radius: v(border-radius);
+    padding: v(space-s);
+    border-radius: v(border-radius);
   }
   &__question {
     font-size: 1em;
+    opacity: 0.5;
   }
   &__answer {
     font-weight: bold;

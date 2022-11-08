@@ -1,4 +1,5 @@
 import { createBemm } from "bemm";
+import { useEffect, useState } from "react";
 import { useSharedSurvey } from "../../SurveyController";
 import "./Question.scss";
 
@@ -8,6 +9,7 @@ type QuestionProps = {
 
 export const Question = ({ id }: QuestionProps) => {
   const { setAnswer, getQuestion } = useSharedSurvey();
+  const [touched, setTouched] = useState(false);
 
   const question = getQuestion(id);
 
@@ -15,10 +17,15 @@ export const Question = ({ id }: QuestionProps) => {
     return: "string",
   });
 
+  const setIsTouched = () => {
+    if (question?.answer == "") setTouched(true);
+  };
+
   const handleChange = (e: any) => {
     const { name, value } = e.target;
     setAnswer(name, value, e.target.checked);
   };
+
   const handleCheckboxChange = (e: any) => {
     const { name, value } = e.target;
     setAnswer(name, value, e.target.checked);
@@ -32,12 +39,16 @@ export const Question = ({ id }: QuestionProps) => {
           {question.description && (
             <p className={bemm("description")}>{question.description}</p>
           )}
+          {question.required && touched && (
+            <span className={bemm("required")}></span>
+          )}
           <input
             className={bemm("control", ["", question.type])}
             required={question.required}
             type="text"
             value={question.answer}
             name={question.id}
+            onBlur={() => setIsTouched()}
             onChange={handleChange}
             placeholder={question.placeholder}
           />
@@ -48,6 +59,9 @@ export const Question = ({ id }: QuestionProps) => {
         <div className={bemm("input-field", ["", question.type])}>
           {question.description && (
             <p className={bemm("description")}>{question.description}</p>
+          )}{" "}
+          {question.required && touched && (
+            <span className={bemm("required")}></span>
           )}
           <input
             className={bemm("control", ["", question.type])}
@@ -56,6 +70,7 @@ export const Question = ({ id }: QuestionProps) => {
             pattern="[^ @]*@[^ @]*"
             value={question.answer}
             name={question.id}
+            onBlur={() => setIsTouched()}
             onChange={handleChange}
             placeholder={question.placeholder}
           />
@@ -66,6 +81,9 @@ export const Question = ({ id }: QuestionProps) => {
         <div className={bemm("input-field", ["", question.type])}>
           {question.description && (
             <p className={bemm("description")}>{question.description}</p>
+          )}{" "}
+          {question.required && touched && (
+            <span className={bemm("required")}></span>
           )}
           <input
             className={bemm("control", ["", question.type])}
@@ -74,6 +92,7 @@ export const Question = ({ id }: QuestionProps) => {
             min="0"
             max="100"
             name={question.id}
+            onBlur={() => setIsTouched()}
             onChange={handleChange}
             value={question.answer}
             placeholder={question.placeholder}
@@ -86,6 +105,9 @@ export const Question = ({ id }: QuestionProps) => {
           <span className={bemm("label")}>{question.question}</span>
           {question.description && (
             <p className={bemm("description")}>{question.description}</p>
+          )}{" "}
+          {question.required && touched && (
+            <span className={bemm("required")}></span>
           )}
           <div className={bemm("input-items")}>
             {question.options.map((option, index) => (
@@ -99,6 +121,7 @@ export const Question = ({ id }: QuestionProps) => {
                   type="radio"
                   id={`${question.id}-${index}`}
                   name={question.id}
+                  onBlur={() => setIsTouched()}
                   onChange={handleChange}
                   value={option}
                   checked={question.answer == option}
@@ -117,8 +140,11 @@ export const Question = ({ id }: QuestionProps) => {
       {question.type == "checkbox" && (
         <div className={bemm("input-field", ["", question.type])}>
           <span className={bemm("label")}>{question.question}</span>
-          {question.description && (
+          {question.description && question.answer == "" && (
             <p className={bemm("description")}>{question.description}</p>
+          )}
+          {question.required && touched && (
+            <span className={bemm("required")}></span>
           )}
           <div className={bemm("input-items")}>
             {question.options.map((option, index) => (
@@ -132,6 +158,7 @@ export const Question = ({ id }: QuestionProps) => {
                   type="checkbox"
                   id={`${question.id}-${index}`}
                   name={question.id}
+                  onBlur={() => setIsTouched()}
                   onChange={handleCheckboxChange}
                   value={option}
                   checked={question.answer.includes(option)}

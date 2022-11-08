@@ -56,12 +56,12 @@
 
         &::placeholder {
           opacity: 0.25;
-          color: red; 
+          color: red;
         }
 
         &:checked + #{$b}__label {
           background-color: color(tertiary);
-          color:color(tertiary-text);
+          color: color(tertiary-text);
           &::before {
             background-color: color(secondary);
           }
@@ -120,6 +120,15 @@
         border-radius: 50%;
         content: "·";
       }
+    }
+  }
+  &__required {
+    background-color: color(tertiary,.5);
+    padding: v(space-xs) v(space); border-radius: v(border-radius);
+    line-height: 1;
+
+    &::before {
+      content: "This field is required";
     }
   }
   &__description {
