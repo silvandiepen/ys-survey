@@ -1,6 +1,11 @@
 import { useCallback, useEffect, useState } from "react";
 import { useBetween } from "use-between";
-import { surveyData, SurveyQuestion, SurveyQuestions } from "./survey";
+import {
+  surveyData,
+  SurveyQuestion,
+  SurveyQuestions,
+  surveySteps,
+} from "./survey";
 
 const localStorageKey = `surveyTest`;
 
@@ -8,6 +13,7 @@ export const useSurvey = () => {
   const [step, setStep] = useState(0);
   const [done, setDone] = useState(true);
   const [init, setInit] = useState(false);
+  const [title, setTitle] = useState("Survey");
   const [questions, setQuestions] = useState(surveyData);
 
   /*
@@ -66,6 +72,7 @@ export const useSurvey = () => {
   useEffect(() => {
     step > 0 && saveToLocalStorage();
     if (step > 3) setDone(true);
+    if (surveySteps[step]) setTitle(surveySteps[step]);
   }, [step]);
 
   useEffect(() => {
@@ -132,6 +139,7 @@ export const useSurvey = () => {
     currentQuestionIds,
     isDone: done,
     currentStep: step,
+    currentTitle: title,
     nextStep,
     prevStep,
     setAnswer,

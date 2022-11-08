@@ -1,11 +1,11 @@
-type InputType = "text" | "email" | "number" | "select" | "radio" | "checkbox";
+type InputType = "text" | "email" | "number" | "select" | "radio" | "checkbox" | "select";
 
 export interface SurveyQuestion {
   id: string;
   step: number;
   question: string;
   description?: string;
-  placeholder?:string;
+  placeholder?: string;
   answer: string;
   required: boolean;
   type: InputType;
@@ -20,7 +20,7 @@ export const surveyData: SurveyQuestions = {
     id: "question1",
     step: 0,
     question: "Name",
-    description:"How can we call you?",
+    description: "How can we call you?",
     answer: "",
     required: false,
     placeholder: "John Doe",
@@ -45,8 +45,8 @@ export const surveyData: SurveyQuestions = {
     question: "How old are you?",
     answer: "",
     required: true,
-    type: "number",
-    options: [],
+    type: "select",
+    options: [`0-18`, `19-25`, `26-35`, `36-45`, `46-60`, `60+`],
   },
   question4: {
     id: "question4",
@@ -86,4 +86,4 @@ export const surveyData: SurveyQuestions = {
   },
 };
 
-export const surveySteps = ["Identity", "Detail", "Favorites", "Summary"];
+export const surveySteps = ["Identity", "Detail", "Favorites", "Summary","Thanks!"];

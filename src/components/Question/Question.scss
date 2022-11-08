@@ -6,7 +6,8 @@
   &__input-field {
     &--text,
     &--number,
-    &--email {
+    &--email,
+    &--select {
       display: flex;
       flex-direction: column-reverse;
     }
@@ -22,7 +23,8 @@
   &__control {
     &--text,
     &--number,
-    &--email {
+    &--email,
+    &--select {
       padding: v(space);
       border-radius: v(border-radius);
       border: none;
@@ -123,8 +125,9 @@
     }
   }
   &__required {
-    background-color: color(tertiary,.5);
-    padding: v(space-xs) v(space); border-radius: v(border-radius);
+    background-color: color(tertiary, 0.5);
+    padding: v(space-xs) v(space);
+    border-radius: v(border-radius);
     line-height: 1;
 
     &::before {

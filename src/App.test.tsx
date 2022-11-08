@@ -1,4 +1,5 @@
 import App from "./App";
+import { surveySteps } from "./hooks/survey";
 import { render, screen } from "./utils/test-utils";
 
 describe("Does the app load?", () => {
@@ -17,7 +18,7 @@ describe("Does the app load?", () => {
   it("Does it load the header and does it load the styling", async () => {
     render(<App />);
     setTimeout(async () => {
-      const element = screen.getByText("Survey");
+      const element = screen.getByText(surveySteps[0]);
       expect(element.className).toEqual("panel_title");
       expect(getComputedStyle(element).display).toEqual("flex");
     }, 2000);

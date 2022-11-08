@@ -13,3 +13,4 @@
 3. Open `embed/index.html`.
 4. Replace the filename there with the newly created.
 5. Run `npm run embed`
+   

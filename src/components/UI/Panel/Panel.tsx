@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { createBemm } from "bemm";
 import "./Panel.scss";
 
@@ -10,7 +10,7 @@ type PanelProps = {
 };
 
 export const Panel = ({ children }: PanelProps) => {
-  const { prevStep, currentStep } = useSharedSurvey();
+  const { prevStep, currentStep, currentTitle } = useSharedSurvey();
 
   const bemm = createBemm("panel");
 
@@ -27,6 +27,16 @@ export const Panel = ({ children }: PanelProps) => {
 
   const classes = [bemm(), active && bemm("", "active")].join(" ");
 
+
+  useEffect(() => {
+
+    if (currentStep == 4) {
+      setTimeout(() => {
+        setActive(false);
+      }, 2000);
+    }
+  }, [currentStep]);
+
   if (active) {
     return (
       <div className={classes} data-testid="panel">
@@ -36,7 +46,7 @@ export const Panel = ({ children }: PanelProps) => {
               ←
             </Button>
           )}
-          <div className={bemm("title")}>Survey</div>
+          <div className={bemm("title")}>{currentTitle}</div>
         </header>
         <div className={bemm("content")}>{children}</div>
       </div>

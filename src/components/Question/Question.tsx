@@ -1,5 +1,5 @@
 import { createBemm } from "bemm";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useSharedSurvey } from "../../hooks/SurveyController";
 import "./Question.scss";
 
@@ -23,7 +23,7 @@ export const Question = ({ id }: QuestionProps) => {
 
   const handleChange = (e: any) => {
     const { name, value } = e.target;
-    setAnswer(name, value, e.target.checked);
+    setAnswer(name, value);
   };
 
   const handleCheckboxChange = (e: any) => {
@@ -98,6 +98,30 @@ export const Question = ({ id }: QuestionProps) => {
             placeholder={question.placeholder}
           />
           <label className={bemm("label")}>{question.question}</label>
+        </div>
+      )}
+      {question.type == "select" && (
+        <div className={bemm("input-field", ["", question.type])}>
+        <select
+          className={bemm("control", ["", question.type])}
+          onChange={handleChange}
+          onBlur={() => setIsTouched()}
+          value={question.answer}
+          name={question.id}
+        >
+          {question.options.map((option, index) => (
+            <option key={index} value={option}>
+              {option}
+            </option>
+          ))}
+        </select>
+          <span className={bemm("label")}>{question.question}</span>
+          {question.description && (
+            <p className={bemm("description")}>{question.description}</p>
+          )}
+          {question.required && touched && (
+            <span className={bemm("required")}></span>
+          )}
         </div>
       )}
       {question.type == "radio" && (
