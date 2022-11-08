@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { createBemm } from "bemm";
-import "./Panel.scss";
 
-import { useSharedSurvey } from "../../../hooks/SurveyController";
+import { useSharedSurvey } from "../../hooks/SurveyController";
 import { Button } from "../Button";
+
+import "./Panel.scss";
 
 type PanelProps = {
   children?: React.ReactNode;
@@ -15,6 +16,7 @@ export const Panel = ({ children }: PanelProps) => {
   const bemm = createBemm("panel");
 
   const [active, setActive] = useState(false);
+  const [showPrev, setShowPrev] = useState(false);
 
   const isDone = () => {
     const local = localStorage.getItem("surveyTest");
@@ -27,9 +29,7 @@ export const Panel = ({ children }: PanelProps) => {
 
   const classes = [bemm(), active && bemm("", "active")].join(" ");
 
-
   useEffect(() => {
-
     if (currentStep == 4) {
       setTimeout(() => {
         setActive(false);
@@ -37,11 +37,15 @@ export const Panel = ({ children }: PanelProps) => {
     }
   }, [currentStep]);
 
+  useEffect(() => {
+    setShowPrev(!isDone() && currentStep > 0 && currentStep < 4);
+  }, [isDone, currentStep]);
+
   if (active) {
     return (
       <div className={classes} data-testid="panel">
         <header className={bemm("header")} role="header">
-          {!isDone && currentStep !== 0 && (
+          {showPrev && (
             <Button onClick={() => prevStep()} size="medium" type="ghost">
               ←
             </Button>

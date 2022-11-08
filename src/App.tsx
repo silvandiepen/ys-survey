@@ -1,6 +1,6 @@
 import { createBemm } from "bemm";
 
-import { Button } from "./components/UI/Button";
+import { Button } from "./components/Button";
 import { Question } from "./components/Question";
 import { Summary } from "./components/Summary";
 
