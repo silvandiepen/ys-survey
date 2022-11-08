@@ -1,6 +1,6 @@
 import { createBemm } from "bemm";
 import "./Summary.scss";
-import { useSharedSurvey, useSurvey } from "../../hooks/SurveyController";
+import { useSharedSurvey } from "../../hooks/SurveyController";
 import { ReactElement } from "react";
 
 type SummaryProps = {};

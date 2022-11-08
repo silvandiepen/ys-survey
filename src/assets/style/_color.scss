@@ -50,15 +50,3 @@
     @include create-rgb("background-off", map.get($colors, "light-off"));
   }
 }
-// [color-mode="dark"] {
-//   @include create-rgb("background", map.get($colors, "dark"));
-//   @include create-rgb("foreground", map.get($colors, "light"));
-//   @include create-rgb("foreground-off", map.get($colors, "light-off"));
-//   @include create-rgb("background-off", map.get($colors, "dark-off"));
-// }
-// [color-mode="light"] {
-//   @include create-rgb("foreground", map.get($colors, "dark"));
-//   @include create-rgb("background", map.get($colors, "light"));
-//   @include create-rgb("foreground-off", map.get($colors, "dark-off"));
-//   @include create-rgb("background-off", map.get($colors, "light-off"));
-// }
