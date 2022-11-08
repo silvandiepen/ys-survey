@@ -17,8 +17,8 @@
 Orrrrr....
 
 1. Create a html file.
-2. Add a <div id="root"></div> to your file.
-3. Add a <script src="https://raw.githubusercontent.com/silvandiepen/ys-survey/6e42555a48ad5ed76e9c655ae8edff533be5acc2/dist/assets/app.a49ec460.js"></script> to the bottom of your html.
+2. Add a `<div id="root"></div>` to your file.
+3. Add a `<script src="https://raw.githubusercontent.com/silvandiepen/ys-survey/6e42555a48ad5ed76e9c655ae8edff533be5acc2/dist/assets/app.a49ec460.js"></script>`to the bottom of your html.
 4. Et Voila!
 
 ## Assumptions
