@@ -1,9 +1,15 @@
 @use "sass:map";
+@import "default";
 
 @function color($name, $settings: ()) {
   @if $settings == () {
     @return var(--color-#{$name});
   } @else {
+    @if (type-of($settings) != "map") {
+      $settings: (
+        opacity: $settings,
+      );
+    }
     $config: map.merge(
       (
         hue: var(--color-#{$name}-h),
@@ -23,10 +29,19 @@
   }
 }
 
+$prefix: "" !default;
+
 @function v($name, $default: "") {
-  @if $default {
-    @return var(--#{$name}, $default);
+  @if $prefix != "" {
+    $prefix: "#{$prefix}-";
+  }
+  @if $default == "" {
+    $default: map.get($defaults, $name);
+  }
+
+  @if $default != "" {
+    @return var(--#{$prefix}#{$name}, $default);
   } @else {
-    @return var(--#{$name});
+    @return var(--#{$prefix}#{$name});
   }
 }

@@ -1,0 +1,41 @@
+$prefix: "panel";
+
+.panel {
+  width: 100%;
+  max-width: v(width, 20em);
+  height: auto;
+  position: fixed;
+  bottom: v(bottom, 1em);
+  right: v(right, 1em);
+  @media only screen and (max-width: calc(20em + 2em)) {
+    width: calc(100% - 2em);
+    max-width: 100%;
+  }
+  // box-shadow: 0 0 1em rgba(0,0,0,.25);
+  filter: drop-shadow(0 0 1em rgba(0, 0, 0, 0.25));
+  &__header {
+    $prefix: "header";
+    background-color: v(background, color(secondary));
+    color: v(text, color(secondary-text));
+    padding: v(padding, 1em);
+    border-radius: v(
+      border-radius,
+      v(border-radius) v(border-radius) 0 0
+    );
+    display: flex;
+    align-items: center;
+    gap: v(space);
+  }
+  &__content {
+    $prefix: "content";
+    padding: v(padding, v(space));
+    color: v(text, color(background-text));
+    background-color: v(background, color(background, 1));
+    border-radius: v(border-radius, 0 0 v(border-radius) v(border-radius));
+  }
+
+  &__title {
+    font-size: 1.25em;
+    font-weight: bold;
+  }
+}

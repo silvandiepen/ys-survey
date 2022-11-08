@@ -1,0 +1,130 @@
+.question {
+  $b: &;
+  & + & {
+    margin-top: v(space);
+  }
+  &__input-field {
+    &--text,
+    &--number,
+    &--email {
+      display: flex;
+      flex-direction: column-reverse;
+    }
+  }
+  &__label {
+    display: block;
+    font-size: 1.25em;
+    font-weight: bold;
+    & + #{$b}__input-items {
+      margin-top: v(space);
+    }
+  }
+  &__control {
+    &--text,
+    &--number,
+    &--email {
+      padding: v(space);
+      border-radius: v(border-radius);
+      border: none;
+      width: 100%;
+      font-size: 1em;
+      background-color: color(background-off);
+      color: color(background-off-text);
+
+      & + #{$b}__label {
+        margin-bottom: v(space-s);
+      }
+      &:focus {
+        outline: none;
+        box-shadow: 0 0 0 4px color(primary, 0.5);
+      }
+    }
+  }
+
+  &__input-item {
+    &--radio,
+    &--checkbox {
+      position: relative;
+      & + & {
+        margin-top: v(space-xs);
+      }
+      #{$b}__control {
+        position: absolute;
+        opacity: 0;
+        width: 0;
+        height: 0;
+
+        &::placeholder {
+          opacity: 0.25;
+          color: red; 
+        }
+
+        &:checked + #{$b}__label {
+          background-color: color(tertiary);
+          color:color(tertiary-text);
+          &::before {
+            background-color: color(secondary);
+          }
+          &::after {
+            transform: scale(0.7);
+          }
+        }
+        &:focus {
+          & + #{$b}__label {
+            outline: 2px solid color(primary);
+          }
+        }
+      }
+      #{$b}__label {
+        background-color: color(background-off);
+        padding: v(space-s);
+        display: flex;
+        align-items: center;
+        border-radius: v(border-radius);
+        &::before {
+          content: "";
+          width: 1em;
+          height: 1em;
+          display: inline-block;
+          border-radius: v(border-radius);
+          background-color: color(tertiary);
+          margin-right: v(space-s);
+        }
+        &::after {
+          content: "x";
+          width: 1em;
+          height: 1em;
+          position: absolute;
+          left: v(space-s);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          line-height: 1em;
+          transform: scale(0);
+          color: white;
+          transition: transform 0.25s ease-in-out;
+        }
+      }
+    }
+    &--checkbox {
+      #{$b}__label::after {
+        content: "✓";
+      }
+    }
+    &--radio {
+      #{$b}__label::before {
+        border-radius: 50%;
+      }
+      #{$b}__label::after {
+        background-color: white;
+        border-radius: 50%;
+        content: "·";
+      }
+    }
+  }
+  &__description {
+    font-size: 0.875em;
+    opacity: 0.5;
+    margin: v(space-s);
+  }
+}

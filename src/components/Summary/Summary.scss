@@ -1,0 +1,17 @@
+.summary {
+  $b: &;
+
+  &__list {
+    background-color: color(background-off);
+    padding: v(space-s); border-radius: v(border-radius);
+  }
+  &__question {
+    font-size: 1em;
+  }
+  &__answer {
+    font-weight: bold;
+    padding: 0;
+    margin: 0;
+    font-size: 1em;
+  }
+}

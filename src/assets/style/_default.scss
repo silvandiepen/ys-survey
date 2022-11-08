@@ -10,9 +10,12 @@ $defaults: (
       '-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol"'
     ),
 );
-
-:root {
-  @each $name, $value in $defaults {
-    --#{$name}: #{$value};
-  }
-}
+$colors: (
+  dark: rgb(26, 27, 29),
+  dark-off: black,
+  light: #fff,
+  light-off: #f7f7f7,
+  primary: rgb(0, 230, 230),
+  secondary: rgb(9, 161, 173),
+  tertiary: rgb(243, 148, 135),
+);

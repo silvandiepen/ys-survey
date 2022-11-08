@@ -6,7 +6,7 @@ import path from "path";
 const assets = path.resolve(__dirname, "./src/assets");
 
 export default defineConfig({
-  base: 'https://cdn.jsdelivr.net/gh/silvandiepen/sil-react-app/dist/',
+  // base: 'https://cdn.jsdelivr.net/gh/silvandiepen/sil-react-app/dist/',
   plugins: [react(), cssInjectedByJsPlugin()],
   css: {
     preprocessorOptions: {

@@ -8,6 +8,7 @@ export const Button = ({
   children,
   href = "",
   color = "primary",
+  type = "default",
   disabled = false,
   size = "medium",
 }: ButtonProps) => {
@@ -15,8 +16,9 @@ export const Button = ({
 
   const classes = [
     bemm(),
-    bemm("", color),
-    bemm("", size),
+    color !== "primary" && bemm("", color),
+    size !== "medium" && bemm("", size),
+    type !== "default" && bemm("", type),
     disabled && bemm("", "disabled"),
   ].join(" ");
 

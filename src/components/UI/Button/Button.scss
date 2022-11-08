@@ -1,7 +1,11 @@
+$prefix: "button-";
 .button {
   border: none;
   border-radius: v(border-radius);
   font-size: 1em;
+  background-color: color(primary);
+  color: color(primary-text);
+  padding: v(padding, v(space-s) v(space));
 
   // Colors
   $button-colors: ("primary", "secondary", "tertiary") !default;
@@ -10,8 +14,8 @@
     &--#{$color-name} {
       background-color: color(#{$color-name});
       color: color(#{$color-name}-text);
-      &:hover,
-      &:focus {
+      &:not([disabled]):hover,
+      &:not([disabled]):focus {
         background-color: color(
           $color-name,
           (
@@ -20,6 +24,10 @@
         );
       }
     }
+  }
+  &--disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
   }
 
   // Sizes
@@ -32,6 +40,13 @@
   }
   &--large {
     font-size: 1.25em;
+    width: 100%;
     padding: v(space) v(space-l);
+  }
+
+  // Type
+  &--ghost {
+    background-color: transparent;
+    --button-padding: 0;
   }
 }

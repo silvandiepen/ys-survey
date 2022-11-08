@@ -1,28 +1,44 @@
-import { useState } from "react";
-import "./assets/style/App.scss";
 
 import { createBemm } from "bemm";
 
 import { Button } from "./components/UI/Button";
+import { Question } from "./components/Question";
+import { Summary } from "./components/Summary";
+
+import { useSurvey } from "./SurveyController";
+
+import "./assets/style/App.scss";
+
 
 const bemm = createBemm("app");
 
 function App() {
-  const [count, setCount] = useState(0);
+  const {
+    getQuestions,
+    nextStep,
+    isDone,
+    nextStepAvailable,
+    initSurvey,
+    showSummary,
+  } = useSurvey();
+
+  initSurvey();
 
   return (
     <div className={bemm()}>
-      <div className={bemm("card")}>
-        <Button size="small" color="primary" onClick={() => setCount((count) => count + 1)}>
-          count is {count}
+      {getQuestions().map((question, index) => {
+        return <Question id={question.id} key={index} />;
+      })}
+
+      {showSummary() && <Summary />}
+
+      {!isDone && nextStepAvailable() && (
+        <Button onClick={() => nextStep()} size="large" color="tertiary">
+          {showSummary() ? `Submit answers` : `Next step`}
         </Button>
-        <Button size="medium" color="secondary" onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </Button>
-        <Button size="large" color="tertiary" onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </Button>
-      </div>
+      )}
+
+      {isDone && <p>Thank you for taking part in this survey!</p>}
     </div>
   );
 }

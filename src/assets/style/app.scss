@@ -1,18 +1,18 @@
 @import "_global";
 @import "_color";
-@import "_default";
 @import "_reset";
-@import "_typography";
 
-body,
-html {
-  margin: 0;
-  padding: 0;
+:root {
+  @each $name, $value in $defaults {
+    --#{$name}: #{$value};
+  }
 }
 
-body {
+.survey {
   color: color(foreground);
   background-color: color(background);
-font-family: v(font-family);
-}
+  font-family: v(font-family);
 
+  font-size: clamp(100%, 50% + 0.666vw, 150%);
+  line-height: 1.75;
+}
