@@ -2,7 +2,7 @@ import { useState } from "react";
 import { createBemm } from "bemm";
 import "./Panel.scss";
 
-import { useSurvey } from "../../../SurveyController";
+import { useSharedSurvey } from "../../../SurveyController";
 import { Button } from "../Button";
 
 type PanelProps = {
@@ -10,18 +10,19 @@ type PanelProps = {
 };
 
 export const Panel = ({ children }: PanelProps) => {
-  const { prevStep, isDone, currentStep } = useSurvey();
+  const { prevStep, currentStep } = useSharedSurvey();
 
   const bemm = createBemm("panel");
 
   const [active, setActive] = useState(false);
 
-  const initPanel = () => {
-    setActive(true);
+  const isDone = () => {
+    const local = localStorage.getItem("surveyTest");
+    return local ? JSON.parse(local).done : false;
   };
 
   setTimeout(() => {
-    initPanel();
+    if (!isDone()) setActive(true);
   }, 2000);
 
   const classes = [bemm(), active && bemm("", "active")].join(" ");

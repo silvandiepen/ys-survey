@@ -1,15 +1,13 @@
 import { createBemm } from "bemm";
+import { useSharedSurvey } from "../../SurveyController";
 import "./Question.scss";
-import { SurveyQuestion } from "../../survey";
-import { useSurvey } from "../../SurveyController";
-import { useEffect } from "react";
 
 type QuestionProps = {
   id: string;
 };
 
 export const Question = ({ id }: QuestionProps) => {
-  const { setAnswer, getQuestion } = useSurvey();
+  const { setAnswer, getQuestion } = useSharedSurvey();
 
   const question = getQuestion(id);
 
@@ -26,6 +24,7 @@ export const Question = ({ id }: QuestionProps) => {
     setAnswer(name, value, e.target.checked);
   };
 
+  if (question == undefined) return <div></div>;
   return (
     <div className={bemm()}>
       {question.type == "text" && (

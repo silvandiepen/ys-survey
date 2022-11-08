@@ -20,7 +20,7 @@ $prefix: "panel";
     padding: v(padding, 1em);
     border-radius: v(
       border-radius,
-      v(border-radius) v(border-radius) 0 0
+      calc(v(border-radius) * 3) calc(v(border-radius) * 3) 0 0
     );
     display: flex;
     align-items: center;
@@ -31,7 +31,10 @@ $prefix: "panel";
     padding: v(padding, v(space));
     color: v(text, color(background-text));
     background-color: v(background, color(background, 1));
-    border-radius: v(border-radius, 0 0 v(border-radius) v(border-radius));
+    border-radius: v(
+      border-radius,
+      0 0 calc(v(border-radius) * 3) calc(v(border-radius) * 3)
+    );
   }
 
   &__title {

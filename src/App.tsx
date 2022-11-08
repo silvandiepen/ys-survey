@@ -1,34 +1,47 @@
-
 import { createBemm } from "bemm";
 
 import { Button } from "./components/UI/Button";
 import { Question } from "./components/Question";
 import { Summary } from "./components/Summary";
 
-import { useSurvey } from "./SurveyController";
-
+import { useSharedSurvey } from "./SurveyController";
 import "./assets/style/App.scss";
-
+import { SurveyQuestion } from "./survey";
 
 const bemm = createBemm("app");
 
 function App() {
   const {
-    getQuestions,
+    currentQuestionIds,
     nextStep,
     isDone,
-    nextStepAvailable,
     initSurvey,
     showSummary,
-  } = useSurvey();
+    questions,
+    currentStep,
+  } = useSharedSurvey();
 
   initSurvey();
 
+  const nextStepAvailable = () =>
+    !!!Object.values(questions).filter(
+      (q: SurveyQuestion) => q.step == currentStep && q.required && q.answer == ""
+    ).length;
+
+  const Questions = () => {
+    const questions = [];
+
+    for (let i = 0; i < currentQuestionIds().length; i++) {
+      questions.push(
+        <Question id={currentQuestionIds()[i]} key={i}></Question>
+      );
+    }
+    return questions;
+  };
+
   return (
     <div className={bemm()}>
-      {getQuestions().map((question, index) => {
-        return <Question id={question.id} key={index} />;
-      })}
+      {Questions()}
 
       {showSummary() && <Summary />}
 

@@ -1,11 +1,13 @@
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { useBetween } from "use-between";
 import { surveyData, SurveyQuestion, SurveyQuestions } from "./survey";
 
 const localStorageKey = `surveyTest`;
 
 export const useSurvey = () => {
   const [step, setStep] = useState(0);
-  const [done, setDone] = useState(false);
+  const [done, setDone] = useState(true);
+  const [init, setInit] = useState(false);
   const [questions, setQuestions] = useState(surveyData);
 
   /*
@@ -14,15 +16,22 @@ export const useSurvey = () => {
    *
    */
   const initSurvey = () => {
-    const localData = localStorage
-      ? JSON.parse(localStorage.getItem(localStorageKey) || "{}")
-      : null;
 
-    if (localData && Object.values(localData).length) {
-      setQuestions(localData.questions);
-      setDone(localData.done);
-      setStep(localData.step);
+    if (init) return;
+    const localData = localStorage.getItem(localStorageKey);
+
+    if (!localData) {
+      setStep(0);
+      setInit(true);
+      setDone(false);
+      return;
     }
+
+    const localDataJson = JSON.parse(localData);
+    setQuestions(localDataJson.questions);
+    setDone(localDataJson.done);
+    setStep(localDataJson.step);
+    setInit(true);
   };
 
   const saveToLocalStorage = () => {
@@ -33,7 +42,13 @@ export const useSurvey = () => {
       questions: questions,
     };
 
+    console.log("survey ::: saving data", saveData);
+
     localStorage.setItem(localStorageKey, JSON.stringify(saveData));
+  };
+
+  const setQuestion = (id: string, value: string) => {
+    questions[id].answer = value;
   };
 
   /*
@@ -41,54 +56,33 @@ export const useSurvey = () => {
    *  Steps
    *
    */
-
-  const getQuestions = () =>
-    Object.values({ ...questions }).filter(
-      (question: SurveyQuestion) => question.step === step
-    );
-
-  const getQuestion = (id: string) => {
-    return questions[id];
-  };
-
-  /*
-   *
-   *  Questions
-   *
-   */
   const nextStep = () => {
-    if (done) return;
-
-    if (!nextStepAvailable) {
-      // console.log("NO YOU CANTTTT");
-      return;
-    }
+    if (done || !nextStepAvailable) return;
 
     setStep(step + 1);
-    if (step == 3) setDone(true);
-
-    // saveToLocalStorage()
-  };
-  const prevStep = () => {
-    setStep(step - 1);
   };
 
-  const nextStepAvailable = () => {
-    return true;
-    // return !!!getQuestions().filter(
-    //   (q: SurveyQuestion) => q.required && q.answer == ""
-    // ).length;
-  };
-  // A question is only un answered if the answer is empty and the question is required.
-  //   const unAnsweredQuestions = ;
-  //   return !!!unAnsweredQuestions.length;
-  // };
+  useEffect(() => {
+    step > 0 && saveToLocalStorage();
+    if (step > 3) setDone(true);
+  }, [step]);
+
+  useEffect(() => {
+    if (done && init) saveToLocalStorage();
+  }, [done]);
+
+  const prevStep = () => setStep(step - 1);
+
+  const nextStepAvailable = !!!Object.values(questions).filter(
+    (q: SurveyQuestion) => q.step == step && q.required && q.answer == ""
+  ).length;
 
   /*
    *
    *  Answers
    *
    */
+
   const setAnswer = (id: string, answer: string, checked = true) => {
     setQuestions((prev: SurveyQuestions) => {
       if (prev[id].type == "checkbox") {
@@ -111,30 +105,30 @@ export const useSurvey = () => {
       };
     });
   };
-
   /*
    *
    *  Summary
    *
    */
-
-  const getSummary = () => {
-    return Object.values(questions).map((q) => ({
-      question: q.question,
-      answer: q.answer,
-    }));
-  };
   const showSummary = () => {
     return step == 3;
   };
 
+  const currentQuestionIds = () => {
+    return Object.values(questions)
+      .filter((q) => q.step == step)
+      .map((q) => q.id);
+  };
+
+  const getQuestion = (id: string) => {
+    return Object.values(questions).find((q) => q.id == id);
+  };
+
   return {
     questions,
-    setQuestions,
-    getQuestions,
+    getQuestions: questions,
     getQuestion,
-    getSummary,
-    nextStepAvailable,
+    currentQuestionIds,
     isDone: done,
     currentStep: step,
     nextStep,
@@ -144,3 +138,5 @@ export const useSurvey = () => {
     showSummary,
   };
 };
+
+export const useSharedSurvey = () => useBetween(useSurvey);
