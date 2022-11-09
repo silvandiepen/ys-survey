@@ -25,15 +25,28 @@ function App() {
 
   initSurvey();
 
+  /*
+   *
+   * Can we go to the next button?
+   *
+   */
   const [goNext, setGoNext] = useState<boolean>(false);
   useEffect(() => {
     const requiredFields = Object.values(getQuestions).filter(
       (q: SurveyQuestion) =>
-        q.step === currentStep && q.required && (typeof q.answer == "string" ? q.answer === "" : q.answer.length < 1)
+        q.step === currentStep &&
+        q.required &&
+        (typeof q.answer == "string" ? q.answer === "" : q.answer.length < 1)
     );
+
     setGoNext(!!!requiredFields.length);
   }, [getQuestions, currentStep]);
 
+  /*
+   *
+   * Create all Questions
+   *
+   */
 
   const [questions, setQuestions] = useState<ReactElement[]>([]);
   useEffect(() => {
@@ -43,7 +56,7 @@ function App() {
       questions.push(<Question id={currentQuestionIds[i]} key={i}></Question>);
     }
     setQuestions(questions);
-  }, [currentStep,currentQuestionIds]);
+  }, [currentStep, currentQuestionIds]);
 
   return (
     <div className={bemm()} data-testid="survey">
