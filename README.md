@@ -14,7 +14,7 @@ Orrrrr....
 
 1. Create a html file.
 2. Add a `<div id="root"></div>` to your file.
-3. Add a `<script src="https://raw.githubusercontent.com/silvandiepen/ys-survey/6e42555a48ad5ed76e9c655ae8edff533be5acc2/dist/app.js"></script>`to the bottom of your html.
+3. Add a `<script src="https://cdn.jsdelivr.net/gh/silvandiepen/ys-survey/dist/app.js"></script>`to the bottom of your html.
 4. Et Voila!
 
 ## Assumptions
