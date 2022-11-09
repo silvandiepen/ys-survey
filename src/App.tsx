@@ -8,6 +8,7 @@ import { useSharedSurvey } from "./hooks/SurveyController";
 import { SurveyQuestion } from "./hooks/survey";
 
 import "./assets/style/App.scss";
+import { ReactElement, useEffect, useState } from "react";
 
 const bemm = createBemm("app");
 
@@ -18,35 +19,39 @@ function App() {
     isDone,
     initSurvey,
     showSummary,
-    questions,
+    getQuestions,
     currentStep,
   } = useSharedSurvey();
 
   initSurvey();
 
-  const nextStepAvailable = () =>
-    !!!Object.values(questions).filter(
-      (q: SurveyQuestion) => q.step == currentStep && q.required && q.answer == ""
-    ).length;
+  const [goNext, setGoNext] = useState<boolean>(false);
+  useEffect(() => {
+    const requiredFields = Object.values(getQuestions).filter(
+      (q: SurveyQuestion) =>
+        q.step === currentStep && q.required && (typeof q.answer == "string" ? q.answer === "" : q.answer.length < 1)
+    );
+    setGoNext(!!!requiredFields.length);
+  }, [getQuestions, currentStep]);
 
-  const Questions = () => {
+
+  const [questions, setQuestions] = useState<ReactElement[]>([]);
+  useEffect(() => {
     const questions = [];
 
-    for (let i = 0; i < currentQuestionIds().length; i++) {
-      questions.push(
-        <Question id={currentQuestionIds()[i]} key={i}></Question>
-      );
+    for (let i = 0; i < currentQuestionIds.length; i++) {
+      questions.push(<Question id={currentQuestionIds[i]} key={i}></Question>);
     }
-    return questions;
-  };
+    setQuestions(questions);
+  }, [currentStep,currentQuestionIds]);
 
   return (
     <div className={bemm()} data-testid="survey">
-      {Questions()}
+      {questions}
 
       {showSummary() && <Summary />}
 
-      {!isDone && nextStepAvailable() && (
+      {!isDone && goNext && (
         <Button onClick={() => nextStep()} size="large" color="tertiary">
           {showSummary() ? `Submit answers` : `Next step`}
         </Button>

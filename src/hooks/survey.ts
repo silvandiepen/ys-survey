@@ -1,4 +1,11 @@
-type InputType = "text" | "email" | "number" | "select" | "radio" | "checkbox" | "select";
+type InputType =
+  | "text"
+  | "email"
+  | "number"
+  | "select"
+  | "radio"
+  | "checkbox"
+  | "select";
 
 export interface SurveyQuestion {
   id: string;
@@ -6,7 +13,7 @@ export interface SurveyQuestion {
   question: string;
   description?: string;
   placeholder?: string;
-  answer: string;
+  answer: string | string[];
   required: boolean;
   type: InputType;
   options: string[];
@@ -21,7 +28,7 @@ export const surveyData: SurveyQuestions = {
     step: 0,
     question: "Name",
     description: "How can we call you?",
-    answer: "",
+    answer: [""],
     required: false,
     placeholder: "John Doe",
     type: "text",
@@ -47,11 +54,13 @@ export const surveyData: SurveyQuestions = {
     required: true,
     type: "select",
     options: [`0-18`, `19-25`, `26-35`, `36-45`, `46-60`, `60+`],
+    description: "Or how old do you feel? It's up to you.",
   },
   question4: {
     id: "question4",
     step: 1,
     question: "What is your gender?",
+    description: "Please select your gender, so we know how to call you",
     answer: "",
     required: true,
     type: "radio",
@@ -61,6 +70,7 @@ export const surveyData: SurveyQuestions = {
     id: "question5",
     step: 2,
     question: "What is your favorite book?",
+    description: "Let us know what kind of books you like",
     answer: "",
     required: true,
     placeholder: "Which books do you like?",
@@ -71,6 +81,7 @@ export const surveyData: SurveyQuestions = {
     id: "question6",
     step: 2,
     question: "What is your favorite color?",
+    description: "You can choose multiple colors",
     answer: "",
     required: true,
     type: "checkbox",
@@ -86,4 +97,10 @@ export const surveyData: SurveyQuestions = {
   },
 };
 
-export const surveySteps = ["Identity", "Detail", "Favorites", "Summary","Thanks!"];
+export const surveySteps = [
+  "Identity",
+  "Detail",
+  "Favorites",
+  "Summary",
+  "Thanks!",
+];

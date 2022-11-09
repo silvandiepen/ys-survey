@@ -3,9 +3,7 @@ import "./Summary.scss";
 import { useSharedSurvey } from "../../hooks/SurveyController";
 import { ReactElement } from "react";
 
-type SummaryProps = {};
-
-export const Summary = ({}: SummaryProps) => {
+export const Summary = () => {
   const { getQuestions } = useSharedSurvey();
 
   const bemm = createBemm("summary", {
@@ -15,11 +13,11 @@ export const Summary = ({}: SummaryProps) => {
   const Answers = (): ReactElement[] => {
     const answer: ReactElement[] = [];
 
-    Object.values(getQuestions).map((question, index) => {
+    Object.values(getQuestions).forEach((question, index) => {
       answer.push(
         <dl className={bemm("list")} key={index}>
           <dt className={bemm("question")}>{question.question}</dt>
-          <dd className={bemm("answer")}>{question.answer}</dd>
+          <dd className={bemm("answer")}>{typeof question.answer == "string" ? question.answer : question.answer.join(', ')}</dd>
         </dl>
       );
     });

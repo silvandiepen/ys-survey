@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useBetween } from "use-between";
 import {
   surveyData,
@@ -52,10 +52,6 @@ export const useSurvey = () => {
     localStorage.setItem(localStorageKey, JSON.stringify(saveData));
   };
 
-  const setQuestion = (id: string, value: string) => {
-    questions[id].answer = value;
-  };
-
   /*
    *
    *  Steps
@@ -77,12 +73,12 @@ export const useSurvey = () => {
 
   useEffect(() => {
     if (done && init) saveToLocalStorage();
-  }, [done]);
+  }, [done, init]);
 
   const prevStep = () => setStep(step - 1);
 
   const nextStepAvailable = !!!Object.values(questions).filter(
-    (q: SurveyQuestion) => q.step == step && q.required && q.answer == ""
+    (q: SurveyQuestion) => q.step === step && q.required && q.answer === ""
   ).length;
 
   /*
@@ -91,21 +87,12 @@ export const useSurvey = () => {
    *
    */
 
-  const setAnswer = (id: string, answer: string, checked = true) => {
+  const setAnswer = (id: string, answer: string | string[]) => {
     setQuestions((prev: SurveyQuestions) => {
-      if (prev[id].type == "checkbox") {
-        let answers = [...new Set(prev[id].answer.split(", "))].filter(
-          (v) => v !== ""
-        );
-        if (checked) {
-          answers.push(answer);
-        } else {
-          answers = answers.filter((a) => a !== answer);
-        }
-        answer = answers.join(", ");
-      }
       const newQuestion = prev[id];
-      newQuestion.answer = `${answer}`;
+
+
+      newQuestion.answer =answer;
 
       return {
         ...prev,
@@ -119,21 +106,23 @@ export const useSurvey = () => {
    *
    */
   const showSummary = () => {
-    return step == 3;
+    return step === 3;
   };
+  /*
+   *
+   *  Question
+   *
+   */
 
-  const currentQuestionIds = () => {
-    return Object.values(questions)
-      .filter((q) => q.step == step)
-      .map((q) => q.id);
-  };
+  const currentQuestionIds = Object.values(questions)
+    .filter((q) => q.step === step)
+    .map((q) => q.id);
 
   const getQuestion = (id: string) => {
-    return Object.values(questions).find((q) => q.id == id);
+    return Object.values(questions).find((q) => q.id === id);
   };
 
   return {
-    questions,
     getQuestions: questions,
     getQuestion,
     currentQuestionIds,
@@ -143,8 +132,8 @@ export const useSurvey = () => {
     nextStep,
     prevStep,
     setAnswer,
-    initSurvey,
     showSummary,
+    initSurvey,
   };
 };
 

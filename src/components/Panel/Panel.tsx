@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { createBemm } from "bemm";
 
 import { useSharedSurvey } from "../../hooks/SurveyController";
@@ -27,10 +27,13 @@ export const Panel = ({ children }: PanelProps) => {
     if (!isDone()) setActive(true);
   }, 2000);
 
-  const classes = [bemm(), active && bemm("", "active")].join(" ");
+  const classes = useMemo(
+    () => [bemm(), active && bemm("", "active")].join(" "),
+    [bemm, active]
+  );
 
   useEffect(() => {
-    if (currentStep == 4) {
+    if (currentStep === 4) {
       setTimeout(() => {
         setActive(false);
       }, 2000);
@@ -44,7 +47,7 @@ export const Panel = ({ children }: PanelProps) => {
   if (active) {
     return (
       <div className={classes} data-testid="panel">
-        <header className={bemm("header")} role="header">
+        <header className={bemm("header")} data-testid="panel-header">
           {showPrev && (
             <Button onClick={() => prevStep()} size="medium" type="ghost">
               ←
@@ -56,6 +59,6 @@ export const Panel = ({ children }: PanelProps) => {
       </div>
     );
   } else {
-    return <div></div>;
+    return <></>;
   }
 };
