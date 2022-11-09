@@ -20,9 +20,14 @@ export default defineConfig({
   build: {
     cssCodeSplit: false,
     rollupOptions: {
+    
       input: {
         app: "./src/main.tsx",
-      },
+      }, output: {
+        entryFileNames: `[name].js`,
+        chunkFileNames: `[name].js`,
+        assetFileNames: `[name].[ext]`
+      }
     },
   },
   test: {

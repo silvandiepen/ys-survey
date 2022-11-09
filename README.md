@@ -8,17 +8,13 @@
 
 ## Building the embedded version...
 
-1. run `npm run build`
-2. Copy the filename of the `app.[hash].js` generated file in /dist
-3. Open `embed/index.html`.
-4. Replace the filename there with the newly created.
-5. Run `npm run embed`
+1. Run `npm run embed`
 
 Orrrrr....
 
 1. Create a html file.
 2. Add a `<div id="root"></div>` to your file.
-3. Add a `<script src="https://raw.githubusercontent.com/silvandiepen/ys-survey/6e42555a48ad5ed76e9c655ae8edff533be5acc2/dist/assets/app.a49ec460.js"></script>`to the bottom of your html.
+3. Add a `<script src="https://raw.githubusercontent.com/silvandiepen/ys-survey/6e42555a48ad5ed76e9c655ae8edff533be5acc2/dist/app.js"></script>`to the bottom of your html.
 4. Et Voila!
 
 ## Assumptions

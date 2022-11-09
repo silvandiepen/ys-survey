@@ -62,7 +62,7 @@ export const BaseInput: FC<BaseProps> = (props: BaseProps) => {
         onChange={(e) => onChangeInput(e)}
         placeholder={placeholder}
       />
-      {required && <span className={bemm("required")}></span>}
+      {required && touched && <span className={bemm("required")}></span>}
       {label && <label className={bemm("label")}>{label}</label>}
     </div>
   );

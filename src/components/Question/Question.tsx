@@ -41,6 +41,7 @@ export const Question = ({ id }: QuestionProps) => {
           label={question.question}
           description={question.description}
           onChangeAction={handleChange}
+          placeholder={question.placeholder}
         />
       )}
       {question.type === "email" && (
@@ -51,6 +52,7 @@ export const Question = ({ id }: QuestionProps) => {
           label={question.question}
           description={question.description}
           onChangeAction={handleChange}
+          placeholder={question.placeholder}
         />
       )}
       {question.type === "number" && (
@@ -61,6 +63,7 @@ export const Question = ({ id }: QuestionProps) => {
           label={question.question}
           description={question.description}
           onChangeAction={handleChange}
+          placeholder={question.placeholder}
         />
       )}
       {question.type === "select" && (
@@ -72,6 +75,7 @@ export const Question = ({ id }: QuestionProps) => {
           label={question.question}
           description={question.description}
           onChangeAction={handleChange}
+          placeholder={question.placeholder}
         />
       )}
       {question.type === "radio" && (

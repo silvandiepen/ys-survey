@@ -38,13 +38,20 @@ export const OptionInput: FC<OptionProps> = (props: OptionProps) => {
       setValues([newValue]);
     }
   };
+
   useEffect(() => {
     if (onChangeAction === undefined) return;
     onChangeAction({
       name: name,
       value: [...new Set(values)].filter((v) => v !== ""),
     });
-  }, [values, name, onChangeAction]);
+  }, [name, values]);
+
+  // const [touched, setTouched] = useState(false);
+
+  // const setIsTouched = () => {
+    // if (value === "") setTouched(true);
+  // };
 
   return (
     <div className={bemm("", ["", type])}>
@@ -69,6 +76,7 @@ export const OptionInput: FC<OptionProps> = (props: OptionProps) => {
                 id={`${name}-${index}`}
                 name={name}
                 onChange={(e) => optionChange(e)}
+                // onBlur={() => setIsTouched()}
                 value={option}
                 checked={values.includes(option)}
               />
@@ -87,6 +95,7 @@ export const OptionInput: FC<OptionProps> = (props: OptionProps) => {
           value={values[0]}
           id={name}
           name={name}
+          // onBlur={() => setIsTouched()}
           onChange={(e) => optionChange(e)}
         >
           <option></option>
@@ -101,7 +110,8 @@ export const OptionInput: FC<OptionProps> = (props: OptionProps) => {
           ))}
         </select>
       )}
-      {required && <span className={bemm("required")}></span>}
+      {/* {touched ? <p>touched</p> : <p>untouched</p>} */}
+      {required  && <span className={bemm("required")}></span>}
       {label && <span className={bemm("label")}>{label}</span>}
     </div>
   );

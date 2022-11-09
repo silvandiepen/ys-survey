@@ -47,8 +47,6 @@ export const useSurvey = () => {
       questions: questions,
     };
 
-    console.log("survey ::: saving data");
-
     localStorage.setItem(localStorageKey, JSON.stringify(saveData));
   };
 
@@ -59,7 +57,6 @@ export const useSurvey = () => {
    */
   const nextStep = () => {
     if (done || !nextStepAvailable) {
-      console.log("survey ::: next step not available");
       return;
     }
     setStep(step + 1);
@@ -72,7 +69,7 @@ export const useSurvey = () => {
   }, [step]);
 
   useEffect(() => {
-    if (done && init) saveToLocalStorage();
+    if (init) saveToLocalStorage();
   }, [done, init]);
 
   const prevStep = () => setStep(step - 1);
@@ -91,8 +88,7 @@ export const useSurvey = () => {
     setQuestions((prev: SurveyQuestions) => {
       const newQuestion = prev[id];
 
-
-      newQuestion.answer =answer;
+      newQuestion.answer = answer;
 
       return {
         ...prev,

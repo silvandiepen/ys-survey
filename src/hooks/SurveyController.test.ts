@@ -7,7 +7,7 @@ describe("useCounter hook", () => {
     const { result } = renderHook(() => useSharedSurvey());
     expect(result.current.currentStep).toBe(0);
     expect(result.current.isDone).toBe(true);
-    expect(result.current.currentQuestionIds().length).toBe(2);
+    expect(result.current.currentQuestionIds.length).toBe(2);
   });
   it("Should not update the step", () => {
     const { result } = renderHook(() => useSharedSurvey());
