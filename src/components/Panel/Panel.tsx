@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import {  useCallback, useEffect, useMemo, useState } from "react";
 import { createBemm } from "bemm";
 
 import { useSharedSurvey } from "../../hooks/SurveyController";
@@ -18,10 +18,11 @@ export const Panel = ({ children }: PanelProps) => {
   const [active, setActive] = useState(false);
   const [showPrev, setShowPrev] = useState(false);
 
-  const isDone = () => {
+
+  const isDone = useCallback(() => {
     const local = localStorage.getItem("surveyTest");
     return local ? JSON.parse(local).done : false;
-  };
+  },[]);
 
   setTimeout(() => {
     if (!isDone()) setActive(true);
@@ -39,6 +40,7 @@ export const Panel = ({ children }: PanelProps) => {
       }, 2000);
     }
   }, [currentStep]);
+
 
   useEffect(() => {
     setShowPrev(!isDone() && currentStep > 0 && currentStep < 4);

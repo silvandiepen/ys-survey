@@ -2,6 +2,7 @@ import { FC, useEffect, useState } from "react";
 import { createBemm } from "bemm";
 
 import { OptionProps } from "./InputTypes";
+import { c } from "../../utils/helpers";
 import "./Input.scss";
 
 const bemm = createBemm("input-field", {
@@ -47,36 +48,42 @@ export const OptionInput: FC<OptionProps> = (props: OptionProps) => {
     });
   }, [name, values]);
 
-  // const [touched, setTouched] = useState(false);
+  const [touched, setTouched] = useState(false);
 
-  // const setIsTouched = () => {
-    // if (value === "") setTouched(true);
-  // };
+  const setIsTouched = () => {
+    setTouched(true);
+  };
 
   return (
-    <div className={bemm("", ["", type])}>
+    <div
+      className={c([
+        bemm("", ["", type]),
+        touched && bemm("", "is-touched"),
+        required && bemm("", "is-required"),
+      ])}
+    >
       {description && <p className={bemm("description")}>{description}</p>}
       {(type === "checkbox" || type === "radio") && (
         <div
-          className={[
+          className={c([
             bemm("options"),
             bemm("options", values.length ? "has-value" : "is-empty"),
-          ].join(" ")}
+          ])}
         >
           {options.map((option, index) => (
             <div className={bemm("option", ["", type])} key={index}>
               <input
-                className={[
+                className={c([
                   bemm("control", ["", type]),
                   values.includes(option) && bemm("control", "checked"),
-                ].join(" ")}
+                ])}
                 required={required}
                 disabled={disabled}
                 type="checkbox"
                 id={`${name}-${index}`}
                 name={name}
                 onChange={(e) => optionChange(e)}
-                // onBlur={() => setIsTouched()}
+                onBlur={() => setIsTouched()}
                 value={option}
                 checked={values.includes(option)}
               />
@@ -89,13 +96,16 @@ export const OptionInput: FC<OptionProps> = (props: OptionProps) => {
       )}
       {type === "select" && (
         <select
-          className={bemm("control", ["", type])}
+          className={c([
+            bemm("control", ["", type]),
+            bemm("control", value.length ? "has-value" : "is-empty"),
+          ])}
           required={required}
           disabled={disabled}
           value={values[0]}
           id={name}
           name={name}
-          // onBlur={() => setIsTouched()}
+          onBlur={() => setIsTouched()}
           onChange={(e) => optionChange(e)}
         >
           <option></option>
@@ -110,8 +120,7 @@ export const OptionInput: FC<OptionProps> = (props: OptionProps) => {
           ))}
         </select>
       )}
-      {/* {touched ? <p>touched</p> : <p>untouched</p>} */}
-      {required  && <span className={bemm("required")}></span>}
+      {required && <span className={bemm("required")}></span>}
       {label && <span className={bemm("label")}>{label}</span>}
     </div>
   );

@@ -116,9 +116,6 @@
         box-shadow: 0 0 0 4px color(primary, 0.5);
       }
     }
-    &--is-empty ~ #{$b}__required{
-      display: block;
-    }
   }
   &__option {
     & + & {
@@ -135,6 +132,12 @@
 
     &::before {
       content: "This field is required";
+    }
+  }
+  &--is-touched#{$b}--is-required {
+    #{$b}__options--is-empty ~ #{$b}__required,
+    #{$b}__control--is-empty ~ #{$b}__required {
+      display: block;
     }
   }
   &__description {

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useBetween } from "use-between";
 import {
   surveyData,
@@ -29,6 +29,7 @@ export const useSurvey = () => {
       setStep(0);
       setInit(true);
       setDone(false);
+      saveToLocalStorage();
       return;
     }
 
@@ -39,16 +40,16 @@ export const useSurvey = () => {
     setInit(true);
   };
 
-  const saveToLocalStorage = () => {
+  const saveToLocalStorage = useCallback(() => {
     const saveData = {
       created: Math.floor(Date.now() / 1000),
-      step: step,
-      done: done,
+      step,
+      done,
       questions: questions,
     };
 
     localStorage.setItem(localStorageKey, JSON.stringify(saveData));
-  };
+  }, [step, done, questions]);
 
   /*
    *
@@ -66,11 +67,11 @@ export const useSurvey = () => {
     step > 0 && saveToLocalStorage();
     if (step > 3) setDone(true);
     if (surveySteps[step]) setTitle(surveySteps[step]);
-  }, [step]);
+  }, [step, saveToLocalStorage]);
 
   useEffect(() => {
     if (init) saveToLocalStorage();
-  }, [done, init]);
+  }, [done, init, saveToLocalStorage]);
 
   const prevStep = () => setStep(step - 1);
 
