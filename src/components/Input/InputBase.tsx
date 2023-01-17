@@ -1,14 +1,9 @@
 import { FC, useState } from "react";
-import { createBemm } from "bemm";
 import { BaseProps } from "./InputTypes";
+import { useClasses } from "bemm";
 import "./Input.scss";
-import { c } from "../../utils/helpers";
 
-const bemm = createBemm("input-field", {
-  return: "string",
-});
-
-
+const bemm = useClasses("input-field", { return: "string" });
 
 export const BaseInput: FC<BaseProps> = (props: BaseProps) => {
   const {
@@ -42,18 +37,19 @@ export const BaseInput: FC<BaseProps> = (props: BaseProps) => {
 
   return (
     <div
-      className={c([
-        bemm("", ["", type]),
-        touched && bemm("", "is-touched"),
-        required && bemm("", "is-required"),
-      ])}
+      className={bemm(
+        ``,
+        `:${type}`,
+        {m: "is-touched", s: touched},
+        {m: "is-required", s: required},
+      )}
     >
       {description && <p className={bemm("description")}>{description}</p>}
       <input
-        className={c([
-          bemm("control", ["", type]),
-          bemm("control", value ? "has-value" : "is-empty"),
-        ])}
+        className={bemm(
+          ["control", ["", type]],
+          ["control", value ? "has-value" : "is-empty"]
+        )}
         required={required}
         type={type}
         value={value}

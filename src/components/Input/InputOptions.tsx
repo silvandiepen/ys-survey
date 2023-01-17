@@ -1,11 +1,11 @@
 import { FC, useEffect, useState } from "react";
-import { createBemm } from "bemm";
+import { useBemm } from "bemm";
 
 import { OptionProps } from "./InputTypes";
 import { c } from "../../utils/helpers";
 import "./Input.scss";
 
-const bemm = createBemm("input-field", {
+const bemm = useBemm("input-field", {
   return: "string",
 });
 

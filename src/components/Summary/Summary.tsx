@@ -1,4 +1,4 @@
-import { createBemm } from "bemm";
+import { useBemm } from "bemm";
 import "./Summary.scss";
 import { useSharedSurvey } from "../../hooks/SurveyController";
 import { ReactElement } from "react";
@@ -6,7 +6,7 @@ import { ReactElement } from "react";
 export const Summary = () => {
   const { getQuestions } = useSharedSurvey();
 
-  const bemm = createBemm("summary", {
+  const bemm = useBemm("summary", {
     return: "string",
   });
 

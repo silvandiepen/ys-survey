@@ -1,5 +1,5 @@
 import {  useCallback, useEffect, useMemo, useState } from "react";
-import { createBemm } from "bemm";
+import { useBemm } from "bemm";
 
 import { useSharedSurvey } from "../../hooks/SurveyController";
 import { Button } from "../Button";
@@ -13,7 +13,7 @@ type PanelProps = {
 export const Panel = ({ children }: PanelProps) => {
   const { prevStep, currentStep, currentTitle } = useSharedSurvey();
 
-  const bemm = createBemm("panel");
+  const bemm = useBemm("panel");
 
   const [active, setActive] = useState(false);
   const [showPrev, setShowPrev] = useState(false);

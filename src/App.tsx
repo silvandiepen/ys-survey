@@ -1,4 +1,4 @@
-import { createBemm } from "bemm";
+import { useBemm } from "bemm";
 
 import { Button } from "./components/Button";
 import { Question } from "./components/Question";
@@ -10,7 +10,7 @@ import { SurveyQuestion } from "./hooks/survey";
 import "./assets/style/App.scss";
 import { ReactElement, useEffect, useState } from "react";
 
-const bemm = createBemm("app");
+const bemm = useBemm("app");
 
 function App() {
   const {

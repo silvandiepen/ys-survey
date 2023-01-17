@@ -24,9 +24,9 @@ export default defineConfig({
       input: {
         app: "./src/main.tsx",
       }, output: {
-        entryFileNames: `[name].js`,
-        chunkFileNames: `[name].js`,
-        assetFileNames: `[name].[ext]`
+        entryFileNames: `module/[name].js`,
+        chunkFileNames: `module/[name].js`,
+        assetFileNames: `module/[name].[ext]`
       }
     },
   },

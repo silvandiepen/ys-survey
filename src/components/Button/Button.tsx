@@ -1,4 +1,4 @@
-import { createBemm } from "bemm";
+import { useBemm } from "bemm";
 import { useMemo } from "react";
 
 import { ButtonProps } from "./Button.model";
@@ -13,7 +13,7 @@ export const Button = ({
   disabled = false,
   size = "medium",
 }: ButtonProps) => {
-  const bemm = createBemm("button");
+  const bemm = useBemm("button");
 
   const classes = useMemo(
     () =>

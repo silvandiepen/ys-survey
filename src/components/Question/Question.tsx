@@ -1,4 +1,4 @@
-import { createBemm } from "bemm";
+import { useBemm } from "bemm";
 import { useSharedSurvey } from "../../hooks/SurveyController";
 
 import {
@@ -21,7 +21,7 @@ export const Question = ({ id }: QuestionProps) => {
 
   const question = getQuestion(id);
 
-  const bemm = createBemm("question", {
+  const bemm = useBemm("question", {
     return: "string",
   });
 
